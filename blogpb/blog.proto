@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package blog;
+
+option go_package = "blogpb";
+
+message Blog { 
+    string id = 1;
+    string author_id = 2;
+    string title = 3;
+    string content = 4;
+}
+
+message CreateBlogRequest{
+    Blog blog = 1; // Will not have a blog id assigned to it
+
+}
+
+message CreateBlogResponse{
+    Blog blog = 1; // Will have the blog id assigned to it
+}
+
+message ReadBlogRequest{
+    string blog_id = 1;
+}
+
+message ReadBlogResponse{
+    Blog blog = 1;
+}
+
+service BlogService{
+    rpc CreateBlog(CreateBlogRequest) returns (CreateBlogResponse);
+    rpc ReadBlog(ReadBlogRequest) returns(ReadBlogResponse); // return NOT FOUND if not found
+}
